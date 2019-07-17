@@ -226,3 +226,27 @@ func TestLeq(t *testing.T) {
 
 	_testLtOrEq(t, true)
 }
+
+func TestFromByteArray(t *testing.T) {
+	fmt.Println("Test: FromByteArray")
+
+	_, e := FromByteArray(0, nil)
+	if e == nil {
+		t.Error("allowed nil data")
+	}
+
+	bits := New(64)
+	data := bits.ToByteArray()
+
+	recreatedData, e := FromByteArray(64, data)
+
+	if e != nil || recreatedData == nil {
+		t.Error("failed to re-cteate byte array", e)
+	}
+
+	recreatedData, e = FromByteArray(88, data)
+
+	if e == nil || recreatedData != nil {
+		t.Error("failed to check for correct length", e)
+	}
+}

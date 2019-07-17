@@ -265,3 +265,23 @@ func (bits *BitArray) ToArray() []int {
 
 	return ints
 }
+
+func (bits *BitArray) ToByteArray() []byte {
+	return bits.bytes
+}
+
+// New create a new BitArray with length(bits).
+func FromByteArray(length int, data []byte) (*BitArray, error) {
+	if data == nil {
+		return nil, errors.New("data can't be nil")
+	}
+	lenpad := nwords(length) * _BytesPW
+	if len(data) != lenpad {
+		return nil, errors.New("length and size of data don't match")
+	}
+	return &BitArray{
+		lenpad: lenpad,
+		length: length,
+		bytes:  data,
+	}, nil
+}
