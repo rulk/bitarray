@@ -285,3 +285,8 @@ func FromByteArray(length int, data []byte) (*BitArray, error) {
 		bytes:  data,
 	}, nil
 }
+
+func BitLenToByteLen(length int) int {
+	lenpad := nwords(length) * _BytesPW
+	return lenpad
+}
